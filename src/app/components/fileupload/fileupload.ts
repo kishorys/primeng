@@ -122,6 +122,8 @@ export class FileUpload implements OnInit,AfterViewInit,AfterContentInit,OnDestr
     @Output() onProgress: EventEmitter<any> = new EventEmitter();
 
     @Output() uploadHandler: EventEmitter<any> = new EventEmitter();
+		
+    @Input() bytesConversionMethod: string = 'decimal';
 
     @ContentChildren(PrimeTemplate) templates: QueryList<any>;
 
@@ -430,7 +432,7 @@ export class FileUpload implements OnInit,AfterViewInit,AfterContentInit,OnDestr
         if(bytes == 0) {
             return '0 B';
         }
-        let k = 1024,
+        let k = (this.bytesConversionMethod === 'binary') ? 1024 : 1000,
         dm = 3,
         sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
         i = Math.floor(Math.log(bytes) / Math.log(k));
